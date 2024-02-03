@@ -1,10 +1,15 @@
 package data
 
-import "github.com/margulan-kalykul/Golang/pkg/types"
+import (
+	"errors"
+
+	"github.com/margulan-kalykul/Golang/pkg/types"
+)
 
 var profiles []types.Profile
 
 func PrepareResponse() {
+	profiles = []types.Profile{}
 	var profile types.Profile
 
 	profile.Id = 1
@@ -40,10 +45,11 @@ func PrepareResponsePlayers() []types.Player {
 	return players
 }
 
-func PrepareResponseProfile(id int) types.Profile {
-	// var error int = 0
-	// if id >= len(profiles) {
-	// 	error = 1
-	// }
-	return profiles[id]
+func PrepareResponseProfile(id int) (types.Profile, error) {
+	var err error = nil
+	if id >= len(profiles) || id <= 0 {
+		err = errors.New("Such id doesn't exist")
+		return types.Profile{Score: len(profiles)}, err
+	}
+	return profiles[id], err
 }

@@ -2,6 +2,7 @@ package routes
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -14,19 +15,23 @@ func Player(w http.ResponseWriter, r *http.Request) {
 	var id string = mux.Vars(r)["id"]
 	i, err := strconv.Atoi(id)
 	if err != nil {
+		fmt.Println(err.Error())
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	response := data.PrepareResponseProfile(i-1)
-	// if error != 0 {
-	// 	w.WriteHeader(http.StatusNotFound)
-	// 	return
-	// }
+	response, err := data.PrepareResponseProfile(i-1)
+	if err != nil {
+		fmt.Println(err.Error())
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 
 	jsonResponse, err := json.Marshal(response)
 	if err != nil {
+		fmt.Println(err.Error())
 		return
 	}
 
