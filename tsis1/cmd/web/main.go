@@ -14,6 +14,7 @@ func main(){
 	//specify endpoints, handler functions and HTTP method
 	router.HandleFunc("/health-check", routes.HealthCheck).Methods("GET")
 	router.HandleFunc("/players", routes.Players).Methods("GET")
+	router.HandleFunc("/player/{id}", routes.Player).Methods("GET")
 	http.Handle("/", router)
 
 	//start and listen to requests

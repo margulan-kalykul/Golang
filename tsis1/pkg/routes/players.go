@@ -10,10 +10,11 @@ import (
 
 func Players(w http.ResponseWriter, r *http.Request) {
 	//declare response variable
-	var response types.Response
+	var response types.ResponsePlayers
 
 	//Retrieve player details
-	players := data.PrepareResponse()
+	data.PrepareResponse()
+	players := data.PrepareResponsePlayers()
 
 	//assign player details to response
 	response.Players = players

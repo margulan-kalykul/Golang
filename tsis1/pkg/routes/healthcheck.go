@@ -10,5 +10,5 @@ func HealthCheck(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	//update response writer
-	fmt.Fprintf(w, "API is up and running")
+	fmt.Fprintf(w, "Author: Kalykul Margulan\nPlayers leaderboard app\nThis apps shows the current board of players and can return the profile of the individual player")
 }
