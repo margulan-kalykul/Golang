@@ -1,22 +1,22 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/margulan-kalykul/Golang/pkg/routes"
 )
 
+const PORT = ":8080"
+
 func main(){
-	//create a new router
 	router := mux.NewRouter()
 
-	//specify endpoints, handler functions and HTTP method
-	router.HandleFunc("/health-check", routes.HealthCheck).Methods("GET")
-	router.HandleFunc("/players", routes.Players).Methods("GET")
-	router.HandleFunc("/player/{id}", routes.Player).Methods("GET")
+	router.HandleFunc("/health-check", healthCheck).Methods("GET")
+	router.HandleFunc("/films", responseFilms).Methods("GET")
+	router.HandleFunc("/film/{id:[0-9]+}", responseFilm).Methods("GET")
 	http.Handle("/", router)
 
-	//start and listen to requests
-	http.ListenAndServe(":8080", router)
+	err := http.ListenAndServe(":8080", router)
+	log.Fatal(err)
 }
